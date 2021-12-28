@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: runtime
+    container_name: whale_alert_app
+    environment:
+      - DB_HOST=postgresql
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=password
+      - CHANNEL_NAME=whale_alert_io
+      - SESSION_ID=server_app
+      - PHONE_NUMBER=<enter-your-telegram-phone>
+      - API_ID=<enter-your-api-id>
+      - API_HASH=<enter-your-api-hash>
+    volumes:
+      - ./wait-for-db.sh:/wait-for-db.sh
+    depends_on:
+      - postgresql
+    entrypoint: ["bash", "/wait-for-db.sh"]
+    command: ["python", "poller.py"]
+
+  postgresql:
+    image: postgres:14-alpine
+    container_name: whale_alert_db
+    volumes:
+      - whales_db:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+#    ports:
+#      - "5432:5432"
+
+volumes:
+  whales_db:
+    name: whales_db
