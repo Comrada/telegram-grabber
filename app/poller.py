@@ -16,7 +16,7 @@ api_id = int(os.environ.get('API_ID'))
 api_hash = os.environ.get('API_HASH')
 channel_name = os.environ.get('CHANNEL_NAME')
 session_id = os.environ.get('SESSION_ID', 'local')
-cache = dict()
+cache = []
 message_parser = MessageParser()
 
 
@@ -25,7 +25,7 @@ async def get_last_messages(client) -> List[dict]:
     async for message in client.iter_messages(entity=channel_name):
         message_object = message_parser.parse(message)
         if message.id not in cache:
-            cache[message.id] = message_object
+            cache.append(message.id)
             messages.append(message_object)
         else:
             break
@@ -39,11 +39,11 @@ async def poll_messages(client: TelegramClient, db_worker: DbWorker) -> None:
 
 
 def warm_cache(db_worker: DbWorker) -> None:
-    messages = db_worker.load_messages(10)
+    messages = db_worker.load_messages(days=10)
     if len(messages) == 0:
-        messages = db_worker.load_last_messages(10)
+        messages = db_worker.load_last_messages(count=10)
     for message in messages:
-        cache[message['id']] = message
+        cache.append(message['id'])
 
 
 async def main():

@@ -17,6 +17,7 @@ class DbWorker:
         sql = '''
         SELECT wa.id, wa.message, wa.link, wa.posted_at, wa.asset, wa.amount from whale_alerts wa
         WHERE wa.posted_at >= '{from_date}'
+        ORDER BY wa.id DESC
         '''.format(from_date=from_date.strftime('%Y-%m-%d %H:%M:%S'))
         return self.__map_rows_to_objects(self.connector.select(sql))
 
@@ -30,13 +31,13 @@ class DbWorker:
 
     def write_message(self, mess: dict):
         sql = '''
-    INSERT INTO
-      whale_alerts(id, message, link, posted_at, asset, amount)
-    VALUES
-      ({id}, '{message}', '{link}', '{posted_at}', '{asset}', '{amount}')
-      ON CONFLICT DO NOTHING;
-    '''.format(id=mess['id'], message=mess['message'], link=mess['link'], posted_at=mess['posted_at'],
-               asset=mess['asset'], amount=mess['amount'])
+        INSERT INTO
+          whale_alerts(id, message, link, posted_at, asset, amount)
+        VALUES
+          ({id}, '{message}', '{link}', '{posted_at}', '{asset}', '{amount}')
+          ON CONFLICT DO NOTHING;
+        '''.format(id=mess['id'], message=mess['message'], link=mess['link'], posted_at=mess['posted_at'],
+                   asset=mess['asset'], amount=mess['amount'])
         logging.info('New record: ' + mess['message'])
         self.connector.execute(sql)
 
