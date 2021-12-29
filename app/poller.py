@@ -10,7 +10,6 @@ from db_connector import DbConnector
 from db_worker import DbWorker
 from message_parser import MessageParser
 
-FORMAT = '%(asctime)s %(message)s'
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.INFO)
 
 api_id = int(os.environ.get('API_ID'))
