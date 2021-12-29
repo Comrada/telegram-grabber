@@ -15,11 +15,11 @@ services:
       - DB_PASS=password
       - CHANNEL_NAME=whale_alert_io
       - SESSION_ID=server_app
-      - PHONE_NUMBER=<enter-your-telegram-phone>
       - API_ID=<enter-your-api-id>
       - API_HASH=<enter-your-api-hash>
     volumes:
       - ./wait-for-db.sh:/wait-for-db.sh
+      - ./server_app.session:/app/server_app.session:rw
     depends_on:
       - postgresql
     entrypoint: ["bash", "/wait-for-db.sh"]

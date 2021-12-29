@@ -15,7 +15,6 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 
 api_id = int(os.environ.get('API_ID'))
 api_hash = os.environ.get('API_HASH')
-phone_number = os.environ.get('PHONE_NUMBER')
 channel_name = os.environ.get('CHANNEL_NAME')
 session_id = os.environ.get('SESSION_ID', 'local')
 cache = dict()

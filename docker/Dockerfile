@@ -15,13 +15,10 @@ RUN apt-get update && \
 FROM python:3.10-slim as runtime
 
 WORKDIR /app
-VOLUME /app
 
 COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt .
 COPY app .
-# you must authorize your Telegram application first, then the Telethon will create a session file
-COPY server_app.session .
 
 RUN apt-get update && \
     apt-get upgrade -y && \
