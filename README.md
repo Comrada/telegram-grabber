@@ -21,7 +21,7 @@ The main table `whale_alerts`
 
 ``` sql
 CREATE TABLE public.whale_alerts (
-	id int4 NOT NULL,
+	id int8 NOT NULL,
 	message text NULL,
 	link varchar(255) NULL,
 	posted_at timestamp NULL,
@@ -43,7 +43,7 @@ Transaction details table `alert_details`
 
 ``` sql
 CREATE TABLE public.alert_details (
-	alert_id int4 NOT NULL,
+	alert_id int8 NOT NULL,
 	blockchain varchar(32) NULL,
 	"type" varchar(32) NULL,
 	hash varchar(128) NULL,
