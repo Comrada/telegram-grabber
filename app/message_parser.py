@@ -44,6 +44,8 @@ class MessageParser:
             .replace('🔥', '') \
             .replace('💵', '') \
             .replace('⚠', '') \
+            .replace('🔒', '') \
+            .replace('🔓', '') \
             .strip()
 
     @staticmethod

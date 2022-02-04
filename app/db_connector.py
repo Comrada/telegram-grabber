@@ -35,6 +35,8 @@ class DbConnector:
                 cursor.close()
 
     def __execute(self, query: str, _return: bool = False) -> Optional[RealDictCursor]:
+        if self.connection.closed:
+            self.connection = self.__create_connection()
         cursor = self.connection.cursor(cursor_factory=RealDictCursor)
         try:
             cursor.execute(query)
@@ -56,6 +58,10 @@ class DbConnector:
                 password=self.db_password,
                 host=self.db_host,
                 port=self.db_port,
+                keepalives=1,
+                keepalives_idle=30,
+                keepalives_interval=10,
+                keepalives_count=5
             )
             connection.autocommit = True
             logging.info("Connection to PostgreSQL DB successful")
