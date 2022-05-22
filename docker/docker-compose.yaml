@@ -17,6 +17,13 @@ services:
       - SESSION_ID=server_app
       - API_ID=<enter-your-api-id>
       - API_HASH=<enter-your-api-hash>
+      - CRON=*/10 * * * *
+      - AMQP_EXCHANGE=whales
+      - AMQP_ROUTING_KEY=alert.new
+      - AMQP_HOST=rabbitmq
+      - AMQP_PORT=5672
+      - AMQP_USER=<amqp-user>
+      - AMQP_PASS=<amqp-pass>
     volumes:
       - ./wait-for-db.sh:/wait-for-db.sh
       - ./server_app.session:/app/server_app.session:rw
