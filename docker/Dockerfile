@@ -1,4 +1,4 @@
-FROM python:3.10-slim as builder
+FROM python:3.11-slim as builder
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN apt-get update && \
     python -m pip install --upgrade pip  && \
     pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
-FROM python:3.10-slim as runtime
+FROM python:3.11-slim as runtime
 
 WORKDIR /app
 

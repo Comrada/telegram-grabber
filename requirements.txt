@@ -1,4 +1,4 @@
-Telethon~=1.24.0
-psycopg2~=2.9.2
+Telethon~=1.25.4
+psycopg2~=2.9.5
 aiocron~=1.8
-pika~=1.2.1
+pika~=1.3.1

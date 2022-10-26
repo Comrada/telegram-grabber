@@ -46,17 +46,24 @@ class MessageParser:
             .replace('⚠', '') \
             .replace('🔒', '') \
             .replace('🔓', '') \
+            .replace('🎉', '') \
+            .replace('💸', '') \
+            .replace('💸', '') \
+            .replace('🖼️', '') \
             .strip()
 
     @staticmethod
     def __get_assets(message: str):
         """
-        This regular expression finds a sequence like "27,205 #ETH" in the text and extracts from it, at the same
-        time, the amount (group 3) and type of asset (group 2)
+        This regular expression finds a sequence like "27,205 #ETH" in the
+        text and extracts from it, at the same time, the amount (group 3) and
+        type of asset (group 2)
 
-        Sometimes, when the transaction is a donation, the message has a slightly different form, namely
-        "A donation of 0.861 BTC (41,406 USD)". Then the first regular expression cannot find the amount and type of
-        the asset, and we try to find them using another expression.
+        Sometimes, when the transaction is a donation, the message has a
+        slightly different form, namely "A donation of 0.861 BTC (41,
+        406 USD)". Then the first regular expression cannot find the amount
+        and type of the asset, and we try to find them using another
+        expression.
         """
         regexp = re.search(r"(([\d,.]+)\s#)([A-Z]+)", message)
         if regexp is not None:
